@@ -1,0 +1,12 @@
+# This script will sit on the host you want to deploy the site too.
+# This should live wherever the home directory is
+
+cd ~
+rm -rf ryankrol.co.uk-api
+git clone https://github.com/RyanMKrol/ryankrol.co.uk-api.git
+cd ryankrol.co.uk-api
+git pull
+npm install
+pm2 delete ryankrol.co.uk-api
+pm2 start bin/www --name ryankrol.co.uk-api
+pm2 save
