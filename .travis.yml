@@ -3,7 +3,7 @@ node_js:
   - 13.3.0
 script: echo "Testing temporarily disabled"
 before_install:
-- openssl enc -aes-256-cbc -d -in credentials/lastfmConfig.json.enc -out credentials/lastfmConfig.json -k $AES_PASS
+- openssl aes-256-cbc -d -a -in credentials/lastfmConfig.json.enc -out credentials/lastfmConfig.json -k $AES_PASS
 deploy:
   provider: script
   script: bash scripts/deploy $AES_PASS
