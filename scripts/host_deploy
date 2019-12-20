@@ -7,6 +7,7 @@ git clone https://github.com/RyanMKrol/ryankrol.co.uk-api.git
 cd ryankrol.co.uk-api
 git pull
 npm install
+npm run build
 pm2 delete ryankrol.co.uk-api
-pm2 start bin/www --name ryankrol.co.uk-api
+pm2 start build/bin/www.js --name ryankrol.co.uk-api
 pm2 save
