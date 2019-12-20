@@ -21,12 +21,14 @@ function extractRelevantApiData(rawData) {
   const relevantdata = albums.map((album) => {
     const artist = album.artist.name
     const albumName = album.name
+    const albumLink = album.url
     const thumbnail = album.image[album.image.length-1]['#text']
 
     if (artist && albumName && thumbnail)
       return {
         artist,
         albumName,
+        albumLink,
         thumbnail,
       }
   }).filter((x) => typeof x !== 'undefined')
