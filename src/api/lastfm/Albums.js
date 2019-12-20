@@ -1,5 +1,8 @@
-import config from './config.js'
 import fetch from "node-fetch"
+import fs from 'fs'
+
+let rawdata = fs.readFileSync(__dirname + '/../../../credentials/lastfmConfig.json')
+let config = JSON.parse(rawdata)
 
 const username = config.username
 const apiKey = config.apiKey
@@ -34,9 +37,11 @@ function extractRelevantApiData(rawData) {
 async function apiCall() {
   return fetch(API_ENDPOINT)
     .then((res) => {
+      console.log('finished making a request, lets see what happens')
       return res.json()
     })
     .catch((err) => {
+      console.log('have an error of some kind')
       console.error(err)
     })
 }
