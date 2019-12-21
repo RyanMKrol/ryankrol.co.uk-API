@@ -23,6 +23,7 @@ function extractRelevantApiData(rawData) {
     const albumName = album.name
     const albumLink = album.url
     const thumbnail = album.image[album.image.length-1]['#text']
+    const playcount = album.playcount
 
     if (artist && albumName && thumbnail)
       return {
@@ -30,6 +31,7 @@ function extractRelevantApiData(rawData) {
         albumName,
         albumLink,
         thumbnail,
+        playcount,
       }
   }).filter((x) => typeof x !== 'undefined')
 
@@ -39,11 +41,9 @@ function extractRelevantApiData(rawData) {
 async function apiCall() {
   return fetch(API_ENDPOINT)
     .then((res) => {
-      console.log('finished making a request, lets see what happens')
       return res.json()
     })
     .catch((err) => {
-      console.log('have an error of some kind')
       console.error(err)
     })
 }
