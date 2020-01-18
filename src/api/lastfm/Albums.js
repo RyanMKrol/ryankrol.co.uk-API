@@ -9,6 +9,7 @@ const apiKey = config.apiKey
 
 const API_ENDPOINT = `http://ws.audioscrobbler.com/2.0/?method=user.gettopalbums&format=json&period=9month&user=${username}&api_key=${apiKey}`
 
+// orchestrates the fetching of raw data, and then normalising it for external use
 async function fetchAlbums() {
   const rawAlbumData = await apiCall()
   const resultData = extractRelevantApiData(rawAlbumData)
@@ -16,6 +17,7 @@ async function fetchAlbums() {
   return resultData
 }
 
+// normalises the data from the Last.fm API
 function extractRelevantApiData(rawData) {
   const albums = rawData.topalbums.album
   const relevantdata = albums.map((album) => {
@@ -38,6 +40,7 @@ function extractRelevantApiData(rawData) {
   return relevantdata
 }
 
+// fetches data from the Last.fm API
 async function apiCall() {
   return fetch(API_ENDPOINT)
     .then((res) => {

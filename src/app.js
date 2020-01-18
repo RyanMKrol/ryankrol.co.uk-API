@@ -7,6 +7,7 @@ import createError from 'http-errors'
 import cors from "cors"
 
 import albumsRouter from './routes/albums'
+import booksRouter from './routes/books'
 
 const app = express()
 
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 
 app.use('/api/albums', albumsRouter)
+app.use('/api/books', booksRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
