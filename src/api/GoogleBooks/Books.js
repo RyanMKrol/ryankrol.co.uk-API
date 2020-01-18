@@ -1,17 +1,19 @@
 import ceil from 'lodash.ceil'
 import fill from 'lodash.fill'
-import fs from 'fs'
-import { apiCall } from "./../utils"
+import {
+  apiCall,
+  fetchConfig,
+} from "./../utils"
 
-let rawdata = fs.readFileSync(__dirname + '/../../../credentials/googleBooksConfig.json')
-let config = JSON.parse(rawdata)
+let API_CONFIG = fetchConfig(__dirname + '/../../../credentials/googleBooksConfig.json')
+let API_OVERRIDES = fetchConfig(__dirname + '/../../../configuration/GoogleBooksAPIOverrides.json')
 
-const userId = config.userId
-const bookshelfId = config.bookshelfId
+const USER_ID = API_CONFIG.userId
+const BOOKSHELF_ID = API_CONFIG.bookshelfId
 
 const BATCH_SIZE = 40
-const API_VOLUMES_ENDPOINT = `https://www.googleapis.com/books/v1/users/${userId}/bookshelves/${bookshelfId}/volumes?maxResults=${BATCH_SIZE}`
-const API_BOOKSHELF_ENDPOINT = `https://www.googleapis.com/books/v1/users/${userId}/bookshelves/${bookshelfId}`
+const API_VOLUMES_ENDPOINT = `https://www.googleapis.com/books/v1/users/${USER_ID}/bookshelves/${BOOKSHELF_ID}/volumes?maxResults=${BATCH_SIZE}`
+const API_BOOKSHELF_ENDPOINT = `https://www.googleapis.com/books/v1/users/${USER_ID}/bookshelves/${BOOKSHELF_ID}`
 
 // Example Endpoint:
 // https://www.googleapis.com/books/v1/users/112523674207519115434/bookshelves/2/volumes
@@ -20,9 +22,10 @@ const API_BOOKSHELF_ENDPOINT = `https://www.googleapis.com/books/v1/users/${user
 async function fetchBooks() {
   const bookshelfInformation = await fetchBookshelfInformation()
   const rawBookData = await _fetchRawBooksInfo(bookshelfInformation)
-  const resultData = _extractRelevantApiData(rawBookData)
+  const booksData = _extractRelevantApiData(rawBookData)
+  const books = _applyDataOverrides(booksData)
 
-  return resultData
+  return books
 }
 
 // fetches all of the raw data for a books library
@@ -72,6 +75,13 @@ function _extractRelevantApiData(rawData) {
   })
 
   return books
+}
+
+// applies any local overrides we have for data we've received from the API
+function _applyDataOverrides(booksData) {
+  return booksData.map((book) => {
+    return Object.assign({}, book, API_OVERRIDES[book.bookId])
+  })
 }
 
 function _getBookIsbnData(rawBook) {
