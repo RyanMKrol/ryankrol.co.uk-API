@@ -1,6 +1,6 @@
 // routes/index.js
 import express from 'express'
-import { fetchAlbums } from './../api/lastfm'
+import { fetchAlbums } from './../api/LastFM'
 
 var router = express.Router()
 
