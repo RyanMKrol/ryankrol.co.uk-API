@@ -1,5 +1,7 @@
-import fetch from "node-fetch"
 import fs from 'fs'
+import {
+  apiCall
+} from "./../utils"
 
 let rawdata = fs.readFileSync(__dirname + '/../../../credentials/lastfmConfig.json')
 let config = JSON.parse(rawdata)
@@ -11,7 +13,7 @@ const API_ENDPOINT = `http://ws.audioscrobbler.com/2.0/?method=user.gettopalbums
 
 // orchestrates the fetching of raw data, and then normalising it for external use
 async function fetchAlbums() {
-  const rawAlbumData = await apiCall()
+  const rawAlbumData = await apiCall(API_ENDPOINT)
   const resultData = extractRelevantApiData(rawAlbumData)
 
   return resultData
@@ -38,17 +40,6 @@ function extractRelevantApiData(rawData) {
   }).filter((x) => typeof x !== 'undefined')
 
   return relevantdata
-}
-
-// fetches data from the Last.fm API
-async function apiCall() {
-  return fetch(API_ENDPOINT)
-    .then((res) => {
-      return res.json()
-    })
-    .catch((err) => {
-      console.error(err)
-    })
 }
 
 export default fetchAlbums
