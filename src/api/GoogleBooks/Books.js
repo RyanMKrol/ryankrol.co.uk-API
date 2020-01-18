@@ -58,11 +58,13 @@ async function fetchBookshelfInformation() {
 function _extractRelevantApiData(rawData) {
   const potentiallyNullBooks = rawData.map((book) => {
     return {
-      title: book.volumeInfo.title,
       authors: book.volumeInfo.authors,
+      bookId: book.id,
       images: book.volumeInfo.imageLinks,
       isbn: _getBookIsbnData(book),
-      bookId: book.id,
+      series: book.volumeInfo.title,
+      numberInSeries: 1,
+      title: book.volumeInfo.title,
     }
   })
 
@@ -71,6 +73,8 @@ function _extractRelevantApiData(rawData) {
       typeof book.authors !== "undefined" &&
       typeof book.images !== "undefined" &&
       typeof book.isbn !== "undefined" &&
+      typeof book.series !== "undefined" &&
+      typeof book.numberInSeries !== "undefined" &&
       typeof book.bookId !== "undefined"
   })
 
