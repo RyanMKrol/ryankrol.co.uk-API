@@ -1,12 +1,12 @@
-// routes/albums.js
+// routes/movies.js
 import express from 'express'
-import { fetchAlbums } from './../api/LastFM'
+import { fetchMovies } from './../api/S3'
 
 var router = express.Router()
 
 router.get('/', async (req, res, next) => {
-  const albums = await fetchAlbums()
-  res.send(albums)
+  const movies = await fetchMovies()
+  res.send(movies)
 })
 
 export default router
