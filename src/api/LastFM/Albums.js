@@ -9,7 +9,7 @@ let config = JSON.parse(rawdata)
 const username = config.username
 const apiKey = config.apiKey
 
-const API_ENDPOINT = `http://ws.audioscrobbler.com/2.0/?method=user.gettopalbums&format=json&period=9month&user=${username}&api_key=${apiKey}`
+const API_ENDPOINT = `http://ws.audioscrobbler.com/2.0/?method=user.gettopalbums&format=json&period=1month&user=${username}&api_key=${apiKey}`
 
 // orchestrates the fetching of raw data, and then normalising it for external use
 async function fetchAlbums() {
