@@ -1,11 +1,14 @@
 // routes/books.js
 import express from 'express'
 import { fetchBooks } from './../api/GoogleBooks'
+import { Cache } from './../cache'
 
-var router = express.Router()
+const booksCache = new Cache(fetchBooks, 1)
+
+const router = express.Router()
 
 router.get('/', async (req, res, next) => {
-  const books = await fetchBooks()
+  const books = await booksCache.fetchData()
   res.send(books)
 })
 
