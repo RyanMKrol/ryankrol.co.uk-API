@@ -3,7 +3,8 @@ import express from 'express'
 import { fetchMovies } from './../api/S3'
 import { Cache } from './../cache'
 
-const moviesCache = new Cache(fetchMovies, 1)
+const CACHE_TTL_MINUTES = 1440
+const moviesCache = new Cache(fetchMovies, CACHE_TTL_MINUTES)
 
 const router = express.Router()
 
