@@ -18,7 +18,6 @@ const downloadMovieData = () => {
   return new Promise((resolve, reject) => {
     new AWS.S3().getObject(params, (error, data) => {
       if (error) reject(error)
-      console.log(JSON.parse(data.Body.toString()))
       resolve(JSON.parse(data.Body.toString()))
     })
   })
