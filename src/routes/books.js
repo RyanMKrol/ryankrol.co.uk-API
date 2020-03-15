@@ -3,7 +3,8 @@ import express from 'express'
 import { fetchBooks } from './../api/GoogleBooks'
 import { Cache } from './../cache'
 
-const booksCache = new Cache(fetchBooks, 1)
+const CACHE_TTL_MINUTES = 1440
+const booksCache = new Cache(fetchBooks, CACHE_TTL_MINUTES)
 
 const router = express.Router()
 
