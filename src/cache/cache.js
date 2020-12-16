@@ -12,14 +12,14 @@ export class Cache {
     if (!this.cacheData[cacheKey]) {
       this.cacheData[cacheKey] = {
         data: await this.fetchMethod(args),
-        ttl: this.generateNewTtl(),
+        ttl: this.generateNewTtl()
       }
     }
 
     if (this.cacheData[cacheKey].ttl < currentTime) {
       this.cacheData[cacheKey] = {
         data: await this.fetchMethod(args),
-        ttl: this.generateNewTtl(),
+        ttl: this.generateNewTtl()
       }
     }
 
