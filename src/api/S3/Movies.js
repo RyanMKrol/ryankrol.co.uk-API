@@ -1,7 +1,7 @@
 import fs from 'fs'
 import AWS from 'aws-sdk'
 
-let rawdata = fs.readFileSync(__dirname + '/../../../credentials/S3Credentials.json')
+let rawdata = fs.readFileSync(__dirname + '/../../../credentials/awsCredentials.json')
 let s3credentials = JSON.parse(rawdata)
 
 const MOVIE_BUCKET_NAME = 'ryankrol-films'
