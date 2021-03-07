@@ -8,26 +8,34 @@ let ratingsCredentials = JSON.parse(rawdata)
 
 const router = express.Router()
 
-router.post(
-  '/',
-  async (req, res, next) => {
-    if (!checkPassword(req.body.password)) {
-      res.send({ message: 'Incorrect Password' })
-    } else {
-      delete req.body.password
-      next()
-    }
-  },
-  async (req, res, next) => {
-    const callback = () => {
-      res.send({ message: 'Write Complete!' })
-    }
-    writeRatings(req.body, callback)
-  }
-)
-
 function checkPassword(password) {
   return password === ratingsCredentials.password
 }
+
+// creation middleware
+router.post('/*', async (req, res, next) => {
+  if (!checkPassword(req.body.password)) {
+    res.send({ message: 'Incorrect Password' })
+  } else {
+    delete req.body.password
+    next()
+  }
+})
+
+// specific routes
+
+router.post('/movie', async (req, res, next) => {
+  const callback = () => {
+    res.send({ message: 'Movie Write Complete!' })
+  }
+  writeRatings('MovieRatings', req.body, callback)
+})
+
+router.post('/album', async (req, res, next) => {
+  const callback = () => {
+    res.send({ message: 'Album Write Complete!' })
+  }
+  writeRatings('AlbumRatings', req.body, callback)
+})
 
 export default router

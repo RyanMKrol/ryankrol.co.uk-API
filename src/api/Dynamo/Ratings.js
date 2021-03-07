@@ -5,11 +5,17 @@ let rawdata = fs.readFileSync(__dirname + '/../../../credentials/awsCredentials.
 let dynamoCredentials = JSON.parse(rawdata)
 
 const DYNAMO_REGION = 'us-east-2'
-const DYNAMO_TABLE = 'MovieRatings'
-const writeQueue = new DynamoWriteQueue(dynamoCredentials, DYNAMO_REGION, DYNAMO_TABLE)
+const WRITE_QUEUES = {}
 
-async function writeTable(data, callback) {
-  writeQueue.push(data, callback)
+async function writeTable(table, data, callback) {
+  setupWriteQueue(table)
+  WRITE_QUEUES[table].push(data, callback)
+}
+
+function setupWriteQueue(table) {
+  if (!WRITE_QUEUES[table]) {
+    WRITE_QUEUES[table] = new DynamoWriteQueue(dynamoCredentials, DYNAMO_REGION, table)
+  }
 }
 
 export default writeTable
