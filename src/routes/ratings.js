@@ -1,6 +1,7 @@
 // routes/ratings.js
 import express from 'express'
 import fs from 'fs'
+import date from 'date-and-time'
 import { writeRatings } from './../api/Dynamo'
 
 let rawdata = fs.readFileSync(__dirname + '/../../credentials/ryankrolRatingsCredentials.json')
@@ -17,7 +18,13 @@ router.post('/*', async (req, res, next) => {
   if (!checkPassword(req.body.password)) {
     res.send({ message: 'Incorrect Password' })
   } else {
+    // remove a password from potentially being stored
     delete req.body.password
+
+    // add the current date to the storage payload
+    req.body.date = date.format(new Date(), 'DD-MM-YYYY')
+
+    // handover to the specific handler
     next()
   }
 })
