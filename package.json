@@ -14,12 +14,12 @@
     "date-and-time": "^0.14.2",
     "debug": "4.1.1",
     "express": "4.17.1",
-    "http-errors": "1.7.3",
+    "http-errors": "^1.7.3",
     "lodash.ceil": "4.0.4",
     "lodash.fill": "3.4.0",
     "morgan": "1.9.1",
     "node-fetch": "2.6.0",
-    "noodle-utils": "^3.3.2"
+    "noodle-utils": "^3.4.1"
   },
   "devDependencies": {
     "babel-cli": "6.26.0",

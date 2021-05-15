@@ -1,1 +1,1 @@
-export { default as writeRatings } from './Ratings'
+export { writeTable, scanTable } from "./Ratings";
