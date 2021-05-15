@@ -18,7 +18,7 @@
     "lodash.ceil": "4.0.4",
     "lodash.fill": "3.4.0",
     "morgan": "1.9.1",
-    "node-fetch": "2.6.0",
+    "node-fetch": "2.6.1",
     "noodle-utils": "^3.4.1"
   },
   "devDependencies": {
