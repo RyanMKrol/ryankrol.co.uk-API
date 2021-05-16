@@ -28,6 +28,8 @@
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "http-errors": "^1.8.0",
+    "lodash.ceil": "^4.0.4",
+    "lodash.fill": "^3.4.0",
     "node-fetch": "^2.6.1",
     "noodle-utils": "^3.4.1"
   },
