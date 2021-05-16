@@ -1,5 +1,3 @@
-import createError from "http-errors";
-
 import { DynamoWriteQueue, DynamoScan } from "noodle-utils";
 import fs from "fs";
 
@@ -27,15 +25,11 @@ function setupWriteQueue(table) {
   }
 }
 
-async function scanTable(table, callback) {
+async function scanTable(table) {
   const scanOperator = setupScan();
 
-  try {
-    const data = await scanOperator.scanTable(table);
-    callback(data.Items);
-  } catch (e) {
-    throw createError(500);
-  }
+  const data = await scanOperator.scanTable(table);
+  return data.Items;
 }
 
 function setupScan() {
