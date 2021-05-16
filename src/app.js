@@ -4,7 +4,6 @@ import cookieParser from 'cookie-parser';
 import createError from 'http-errors';
 import cors from 'cors';
 
-import exampleRouter from './modules/routes/example';
 import ratingsRouter from './modules/routes/ratings';
 import listensRouter from './modules/routes/listens';
 import booksRouter from './modules/routes/books';
@@ -17,7 +16,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/example/endpoint', exampleRouter);
 app.use('/api/ratings', ratingsRouter);
 app.use('/api/listens', listensRouter);
 app.use('/api/books', booksRouter);
