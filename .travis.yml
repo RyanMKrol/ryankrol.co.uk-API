@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - 13.3.0
+  - 14.7.0
 script: echo "Testing temporarily disabled"
 deploy:
   provider: script
@@ -9,5 +9,5 @@ deploy:
     branch: master
 branches:
   only:
-  - master
-  - development
+    - master
+    - development
