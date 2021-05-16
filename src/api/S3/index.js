@@ -1,1 +1,1 @@
-export { default as fetchMovies } from "./Movies"
+export { default as fetchMovies } from "./Movies";

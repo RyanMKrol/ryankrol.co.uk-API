@@ -1,43 +1,32 @@
 // app.js
-import express from 'express'
-import path from 'path'
-import cookieParser from 'cookie-parser'
-import logger from 'morgan'
-import createError from 'http-errors'
-import cors from 'cors'
+import express from "express";
+import path from "path";
+import cookieParser from "cookie-parser";
+import logger from "morgan";
+import createError from "http-errors";
+import cors from "cors";
 
-import albumsRouter from './routes/albums'
-import booksRouter from './routes/books'
-import moviesRouter from './routes/movies'
-import ratingsRouter from './routes/ratings'
+import albumsRouter from "./routes/albums";
+import booksRouter from "./routes/books";
+import moviesRouter from "./routes/movies";
+import ratingsRouter from "./routes/ratings";
 
-const app = express()
+const app = express();
 
-app.use(cors())
-app.use(logger('dev'))
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
-app.use(cookieParser())
+app.use(cors());
+app.use(logger("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
-app.use('/api/albums', albumsRouter)
-app.use('/api/books', booksRouter)
-app.use('/api/movies', moviesRouter)
-app.use('/api/ratings', ratingsRouter)
+app.use("/api/albums", albumsRouter);
+app.use("/api/books", booksRouter);
+app.use("/api/movies", moviesRouter);
+app.use("/api/ratings", ratingsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404))
-})
+  next(createError(404));
+});
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message
-  res.locals.error = req.app.get('env') === 'development' ? err : {}
-
-  // render the error page
-  res.status(err.status || 500)
-  res.send('500 - Internal Server Error')
-})
-
-export default app
+export default app;

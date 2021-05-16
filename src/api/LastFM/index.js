@@ -1,1 +1,1 @@
-export { default as fetchAlbums } from "./Albums"
+export { default as fetchAlbums } from "./Albums";
