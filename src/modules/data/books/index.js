@@ -2,7 +2,7 @@ import ceil from 'lodash.ceil';
 import fill from 'lodash.fill';
 import fs from 'fs';
 
-import apiCall from '../utils';
+import apiCall from '../shared/utils';
 
 const API_CONFIG = JSON.parse(
   fs.readFileSync(`${__dirname}/../../../../credentials/googleBooks.json`),

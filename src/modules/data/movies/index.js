@@ -1,4 +1,4 @@
-import downloadFile from '../s3';
+import downloadFile from '../shared/s3';
 
 const MOVIE_BUCKET_NAME = 'ryankrol-films';
 const MOVIE_DATA_FILE_KEY = 'films_data.txt';

@@ -1,4 +1,4 @@
-import { getWriteQueueInstance, scanTable } from '../dynamo';
+import { getWriteQueueInstance, scanTable } from '../shared/dynamo';
 
 const ALBUM_RATINGS_TABLE = 'AlbumRatings';
 const MOVIE_RATINGS_TABLE = 'MovieRatings';

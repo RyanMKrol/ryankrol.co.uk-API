@@ -1,7 +1,7 @@
 import { DynamoWriteQueue, DynamoScan } from 'noodle-utils';
 import fs from 'fs';
 
-const credentials = JSON.parse(fs.readFileSync(`${__dirname}/../../../../credentials/aws.json`));
+const credentials = JSON.parse(fs.readFileSync(`${__dirname}/../../../../../credentials/aws.json`));
 
 const DYNAMO_REGION = 'us-east-2';
 const WRITE_QUEUES = {};

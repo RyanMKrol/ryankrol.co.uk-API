@@ -1,5 +1,5 @@
 import fs from 'fs';
-import apiCall from '../utils';
+import apiCall from '../shared/utils';
 
 const config = JSON.parse(fs.readFileSync(`${__dirname}/../../../../credentials/lastfm.json`));
 

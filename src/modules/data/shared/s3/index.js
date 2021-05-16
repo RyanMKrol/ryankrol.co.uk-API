@@ -1,7 +1,7 @@
 import fs from 'fs';
 import AWS from 'aws-sdk';
 
-const credentials = JSON.parse(fs.readFileSync(`${__dirname}/../../../../credentials/aws.json`));
+const credentials = JSON.parse(fs.readFileSync(`${__dirname}/../../../../../credentials/aws.json`));
 
 /**
  * Method to download file from S3 storage
