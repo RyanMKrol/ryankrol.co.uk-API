@@ -1,5 +1,8 @@
-import fs from 'fs';
+import createError from 'http-errors';
 import date from 'date-and-time';
+import fs from 'fs';
+
+import { createAlbumRatings, createMovieRatings } from '../../data/ratings';
 
 const RATINGS_CREDENTIALS = JSON.parse(
   fs.readFileSync(`${__dirname}/../../../../credentials/ryankrolSite.json`),
@@ -44,14 +47,34 @@ function createPostMiddleware(router) {
  * @param {object} router Express router object
  */
 function createPostRoutes(router) {
-  router.post('/movie', async (req, res, next) => {
-    res.send({ message: 'Movie Write Complete!' });
-    next();
+  router.post('/album', async (req, res, next) => {
+    /**
+     * Method to let the user know that the write is complete
+     */
+    const callback = () => {
+      res.send({ message: 'Album Write Complete!' });
+    };
+
+    try {
+      createAlbumRatings(req.body, callback);
+    } catch (e) {
+      next(createError(500));
+    }
   });
 
-  router.post('/album', async (req, res, next) => {
-    res.send({ message: 'Album Write Complete!' });
-    next();
+  router.post('/movie', async (req, res, next) => {
+    /**
+     * Method to let the user know that the write is complete
+     */
+    const callback = () => {
+      res.send({ message: 'Movie Write Complete!' });
+    };
+
+    try {
+      createMovieRatings(req.body, callback);
+    } catch (e) {
+      next(createError(500));
+    }
   });
 }
 
