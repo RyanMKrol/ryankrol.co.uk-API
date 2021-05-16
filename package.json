@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.10.4",
+    "aws-sdk": "^2.907.0",
     "cookie-parser": "^1.4.4",
     "core-js": "^3.6.5",
     "cors": "^2.8.5",

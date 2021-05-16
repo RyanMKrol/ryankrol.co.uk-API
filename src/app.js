@@ -8,6 +8,7 @@ import exampleRouter from './modules/routes/example';
 import ratingsRouter from './modules/routes/ratings';
 import listensRouter from './modules/routes/listens';
 import booksRouter from './modules/routes/books';
+import moviesRouter from './modules/routes/movies';
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use('/example/endpoint', exampleRouter);
 app.use('/api/ratings', ratingsRouter);
 app.use('/api/listens', listensRouter);
 app.use('/api/books', booksRouter);
+app.use('/api/movies', moviesRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
