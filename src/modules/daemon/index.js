@@ -1,5 +1,5 @@
 import schedule from 'node-schedule';
-import primeSite from './prime';
+import primeSite from './primeSite';
 
 /**
  * Function to run the daemons used by the site
