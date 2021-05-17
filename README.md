@@ -10,7 +10,7 @@ Provides the list of albums I've been listening to over the last month, using th
 
 ### Endpoint
 
-/api/albums
+/api/listens
 
 ### Example Response
 
@@ -133,6 +133,70 @@ Provides the list of movies found in my library, using S3, and data updated from
     "Production": "Universal Pictures",
     "Website": "N/A",
     "Response": "True"
+  },
+  ...
+]
+```
+
+## Ratings
+
+### Summary
+
+Provides the data behind ratings I've been giving to movies and albums.
+
+### Endpoint
+
+/api/ratings/album
+
+### Example Response
+
+```
+[
+  {
+    "highlights": "Selah, Follow God",
+    "artist": "Kanye West",
+    "mood": "Vibin",
+    "date": "16-05-2021",
+    "rating": 71,
+    "title": "JESUS IS KING"
+  },
+  {
+    "highlights": "Warm, Fly on the Wall, Husky",
+    "artist": "Joey Pecoraro",
+    "mood": "Zen",
+    "date": "15-03-21",
+    "rating": 78,
+    "title": "Little Pear"
+  },
+  ...
+]
+```
+
+### Endpoint
+
+/api/ratings/movie
+
+### Example Response
+
+```
+[
+  {
+    "sound": 5,
+    "blind": 15,
+    "craftsmanship": 10,
+    "gist": "A killer clown exists",
+    "characters": 5,
+    "story": 15,
+    "title": "Killjoy"
+  },
+  {
+    "sound": 75,
+    "blind": 30,
+    "craftsmanship": 75,
+    "gist": "A strange man goes hunting for a jaguar, or a shark",
+    "characters": 40,
+    "story": 55,
+    "title": "The Life Aquatic with Steve Zissou"
   },
   ...
 ]
