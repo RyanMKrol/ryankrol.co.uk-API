@@ -1,4 +1,4 @@
-import Cache from './Cache';
+import getCacheInstance from './Cache';
 import { CacheAlreadyExists, CacheDoesNotExist } from '../../errors';
 /**
  * A collection of caches
@@ -19,10 +19,10 @@ export class CacheCollection {
    * @param {Function} method The method to call to fetch new data
    * @returns {Cache} The cache created by this register
    */
-  registerCache(name, ttlMinutes, method) {
+  async registerCache(name, ttlMinutes, method) {
     if (this.caches[name]) throw new CacheAlreadyExists();
 
-    this.caches[name] = new Cache(method, ttlMinutes);
+    this.caches[name] = await getCacheInstance(name, method, ttlMinutes);
 
     return this.caches[name];
   }
