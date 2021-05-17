@@ -5,16 +5,16 @@ import createError from 'http-errors';
 import cors from 'cors';
 
 import {
-  RATINGS_ENDPOINT,
-  LISTENS_ENDPOINT,
   BOOKS_ENDPOINT,
+  LISTENS_ENDPOINT,
   MOVIES_ENDPOINT,
+  RATINGS_ENDPOINT,
 } from './modules/constants';
 
-import ratingsRouter from './modules/routes/ratings';
-import listensRouter from './modules/routes/listens';
 import booksRouter from './modules/routes/books';
+import listensRouter from './modules/routes/listens';
 import moviesRouter from './modules/routes/movies';
+import ratingsRouter from './modules/routes/ratings';
 
 const app = express();
 
@@ -23,10 +23,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use(RATINGS_ENDPOINT, ratingsRouter);
-app.use(LISTENS_ENDPOINT, listensRouter);
 app.use(BOOKS_ENDPOINT, booksRouter);
+app.use(LISTENS_ENDPOINT, listensRouter);
 app.use(MOVIES_ENDPOINT, moviesRouter);
+app.use(RATINGS_ENDPOINT, ratingsRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
