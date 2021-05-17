@@ -22,7 +22,7 @@ export class CacheCollection {
   async registerCache(name, ttlMinutes, method) {
     if (this.caches[name]) throw new CacheAlreadyExists();
 
-    this.caches[name] = await getCacheInstance(name, method, ttlMinutes);
+    this.caches[name] = getCacheInstance(name, method, ttlMinutes);
 
     return this.caches[name];
   }
@@ -33,7 +33,7 @@ export class CacheCollection {
    * @param {string} name The name of the cache to find
    * @returns {Cache} the cache against the name given
    */
-  getCache(name) {
+  async getCache(name) {
     if (!this.caches[name]) {
       throw new CacheDoesNotExist();
     }

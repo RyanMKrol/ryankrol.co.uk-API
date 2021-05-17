@@ -5,14 +5,13 @@ import createError from 'http-errors';
 import cacheCollection from '../../data/cache';
 import getListens from '../../data/listens';
 
+const CACHE_NAME = 'listens';
 const CACHE_TTL_MINUTES = 60 * 24 * 7;
-
-let listensCache = null;
 
 const router = express.Router();
 
 router.get('/', async (req, res, next) => {
-  const cache = await getCache();
+  const cache = await cacheCollection.getCache(CACHE_NAME);
 
   try {
     const data = await cache.call();
@@ -23,16 +22,10 @@ router.get('/', async (req, res, next) => {
 });
 
 /**
- * Method to fetch cache for our API
- *
- * @returns {Cache} an instance of a cache
+ * Method to create cache for our listens API
  */
-async function getCache() {
-  if (!listensCache) {
-    listensCache = await cacheCollection.registerCache('listens', CACHE_TTL_MINUTES, () => getListens());
-  }
-
-  return listensCache;
-}
+(async () => {
+  cacheCollection.registerCache(CACHE_NAME, CACHE_TTL_MINUTES, () => getListens());
+})();
 
 export default router;

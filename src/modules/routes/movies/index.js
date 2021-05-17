@@ -5,14 +5,13 @@ import createError from 'http-errors';
 import cacheCollection from '../../data/cache';
 import getMovies from '../../data/movies';
 
+const CACHE_NAME = 'movies';
 const CACHE_TTL_MINUTES = 60 * 24 * 7;
-
-let moviesCache = null;
 
 const router = express.Router();
 
 router.get('/', async (req, res, next) => {
-  const cache = await getCache();
+  const cache = await cacheCollection.getCache(CACHE_NAME);
 
   try {
     const data = await cache.call();
@@ -23,16 +22,10 @@ router.get('/', async (req, res, next) => {
 });
 
 /**
- * Method to fetch cache for our API
- *
- * @returns {Cache} an instance of a cache
+ * Method to create cache for our movies API
  */
-async function getCache() {
-  if (!moviesCache) {
-    moviesCache = await cacheCollection.registerCache('movies', CACHE_TTL_MINUTES, () => getMovies());
-  }
-
-  return moviesCache;
-}
+(async () => {
+  cacheCollection.registerCache(CACHE_NAME, CACHE_TTL_MINUTES, () => getMovies());
+})();
 
 export default router;

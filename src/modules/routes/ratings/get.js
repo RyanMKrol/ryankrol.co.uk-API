@@ -3,10 +3,9 @@ import cacheCollection from '../../data/cache';
 
 import { getAlbumRatings, getMovieRatings } from '../../data/ratings';
 
+const ALBUM_CACHE_NAME = 'albumRatings';
+const MOVIE_CACHE_NAME = 'movieRatings';
 const CACHE_TTL_MINUTES = 60 * 24;
-
-let albumRatingsCache = null;
-let movieRatingsCache = null;
 
 /**
  * Creates the GET routes for the ratings API
@@ -16,7 +15,7 @@ let movieRatingsCache = null;
 function createGetRoutes(router) {
   // fetch all album ratings
   router.get('/album', async (req, res, next) => {
-    const cache = await getAlbumCache();
+    const cache = await cacheCollection.getCache(ALBUM_CACHE_NAME);
 
     try {
       const data = await cache.call();
@@ -28,7 +27,7 @@ function createGetRoutes(router) {
 
   // fetch all movie ratings
   router.get('/movie', async (req, res, next) => {
-    const cache = await getMovieCache();
+    const cache = await cacheCollection.getCache(MOVIE_CACHE_NAME);
 
     try {
       const data = await cache.call();
@@ -40,29 +39,17 @@ function createGetRoutes(router) {
 }
 
 /**
- * Method to fetch cache for our API
- *
- * @returns {Cache} an instance of a cache
+ * Method to create cache for our album ratings API
  */
-async function getAlbumCache() {
-  if (!albumRatingsCache) {
-    albumRatingsCache = await cacheCollection.registerCache('albumRatings', CACHE_TTL_MINUTES, () => getAlbumRatings());
-  }
-
-  return albumRatingsCache;
-}
+(async () => {
+  cacheCollection.registerCache(ALBUM_CACHE_NAME, CACHE_TTL_MINUTES, () => getAlbumRatings());
+})();
 
 /**
- * Method to fetch cache for our API
- *
- * @returns {Cache} an instance of a cache
+ * Method to create cache for our movie ratings API
  */
-async function getMovieCache() {
-  if (!movieRatingsCache) {
-    movieRatingsCache = await cacheCollection.registerCache('movieRatings', CACHE_TTL_MINUTES, () => getMovieRatings());
-  }
-
-  return movieRatingsCache;
-}
+(async () => {
+  cacheCollection.registerCache(MOVIE_CACHE_NAME, CACHE_TTL_MINUTES, () => getMovieRatings());
+})();
 
 export default createGetRoutes;
