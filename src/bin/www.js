@@ -5,6 +5,9 @@ import debugLib from 'debug';
 import http from 'http';
 import app from '../app';
 
+import { LISTENING_PORT } from '../modules/constants';
+import startDaemons from '../modules/daemon';
+
 const debug = debugLib('your-project-name:server');
 
 let port = null;
@@ -68,13 +71,14 @@ function onListening() {
   const bind = typeof addr === 'string' ? `pipe ${addr}` : `port ${addr.port}`;
   debug(`Listening on ${bind}`);
   process.stdout.write(`Listening on ${bind}\n`);
+  startDaemons();
 }
 
 /**
  * Get port from environment and store in Express.
  */
 
-port = normalizePort(process.env.PORT || '8000');
+port = normalizePort(process.env.PORT || `${LISTENING_PORT}`);
 app.set('port', port);
 
 /**
