@@ -42,7 +42,7 @@ function buildPrimingEndpoint(endpoint) {
  */
 async function primeEndpoint(endpoint) {
   return fetch(endpoint).then(() => {
-    console.log(`Finished priming site - ${endpoint}`);
+    process.stdout.write(`Finished priming site - ${endpoint}\n`);
   });
 }
 
