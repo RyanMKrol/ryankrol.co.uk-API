@@ -1,5 +1,5 @@
 import createError from 'http-errors';
-import cacheCollection from '../../cache';
+import cacheCollection from '../../data/cache';
 
 import { getAlbumRatings, getMovieRatings } from '../../data/ratings';
 

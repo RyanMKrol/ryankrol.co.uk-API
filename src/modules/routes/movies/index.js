@@ -2,7 +2,7 @@
 import express from 'express';
 import createError from 'http-errors';
 
-import cacheCollection from '../../cache';
+import cacheCollection from '../../data/cache';
 import getMovies from '../../data/movies';
 
 const CACHE_TTL_MINUTES = 60 * 24;

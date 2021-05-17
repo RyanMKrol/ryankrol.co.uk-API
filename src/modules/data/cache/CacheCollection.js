@@ -1,5 +1,5 @@
 import Cache from './Cache';
-import { CacheAlreadyExists, CacheDoesNotExist } from '../errors';
+import { CacheAlreadyExists, CacheDoesNotExist } from '../../errors';
 /**
  * A collection of caches
  */
