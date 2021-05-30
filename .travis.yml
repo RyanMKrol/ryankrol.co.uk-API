@@ -8,6 +8,7 @@ deploy:
   script: bash scripts/deploy $AES_PASS
   on:
     branch: master
+  skip_cleanup: true
 branches:
   only:
     - master
