@@ -24,18 +24,14 @@ function createPostRouters(router) {
  * @param {object} router Express router object
  */
 function createPostMiddleware(router) {
-  // rating creation middleware
   router.post('/*', async (req, res, next) => {
     if (!checkCredentials(req.body.password)) {
       res.send({ message: 'Incorrect Password' });
     } else {
-      // remove a password from potentially being stored
       delete req.body.password;
 
-      // add the current date to the storage payload
       req.body.date = date.format(new Date(), 'DD-MM-YYYY');
 
-      // handover to the specific handler
       next();
     }
   });

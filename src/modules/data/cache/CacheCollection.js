@@ -43,4 +43,5 @@ export class CacheCollection {
 }
 
 const cacheCollection = new CacheCollection();
+
 export default cacheCollection;

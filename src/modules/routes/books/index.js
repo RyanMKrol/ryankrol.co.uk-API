@@ -22,7 +22,7 @@ router.get('/', async (req, res, next) => {
 });
 
 /**
- * Method to fetch cache for our API
+ * Method to fetch cache for our books API
  */
 (async () => {
   cacheCollection.registerCache(CACHE_NAME, CACHE_TTL_MINUTES, () => getBooks());
