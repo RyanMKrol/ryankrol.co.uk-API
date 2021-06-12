@@ -3,7 +3,7 @@ import date from 'date-and-time';
 import fs from 'fs';
 
 import { createAlbumRatings, createMovieRatings } from '../../data/ratings';
-import fetchMovieThumbnail from '../../data/thumbnails';
+import { fetchThumbnailForMovie, fetchThumbnailForAlbum } from '../../data/thumbnails';
 
 const RATINGS_CREDENTIALS = JSON.parse(
   fs.readFileSync(`${__dirname}/../../../../credentials/ryankrolSite.json`),
@@ -44,6 +44,25 @@ function createPostMiddleware(router) {
  * @param {object} router Express router object
  */
 function createPostRoutes(router) {
+  createAlbumPostRoutes(router);
+  createMoviePostRoutes(router);
+}
+
+/**
+ * Sets up the routes for creating album ratings
+ *
+ * @param {object} router Express router object
+ */
+function createAlbumPostRoutes(router) {
+  router.post('/album', async (req, res, next) => {
+    try {
+      req.body.thumbnail = await fetchThumbnailForAlbum(req.body.artist, req.body.title);
+      next();
+    } catch (e) {
+      res.send({ message: 'Could not find album thumbnail' });
+    }
+  });
+
   router.post('/album', async (req, res, next) => {
     /**
      * Method to let the user know that the write is complete
@@ -58,8 +77,6 @@ function createPostRoutes(router) {
       next(createError(500));
     }
   });
-
-  createMoviePostRoutes(router);
 }
 
 /**
@@ -70,7 +87,7 @@ function createPostRoutes(router) {
 function createMoviePostRoutes(router) {
   router.post('/movie', async (req, res, next) => {
     try {
-      req.body.thumbnail = await fetchMovieThumbnail(req.body.title);
+      req.body.thumbnail = await fetchThumbnailForMovie(req.body.title);
       next();
     } catch (e) {
       res.send({ message: 'Could not find movie thumbnail' });
