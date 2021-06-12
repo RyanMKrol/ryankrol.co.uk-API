@@ -3,6 +3,7 @@ import date from 'date-and-time';
 import fs from 'fs';
 
 import { createAlbumRatings, createMovieRatings } from '../../data/ratings';
+import fetchMovieThumbnail from '../../data/thumbnails';
 
 const RATINGS_CREDENTIALS = JSON.parse(
   fs.readFileSync(`${__dirname}/../../../../credentials/ryankrolSite.json`),
@@ -55,6 +56,24 @@ function createPostRoutes(router) {
       createAlbumRatings(req.body, callback);
     } catch (e) {
       next(createError(500));
+    }
+  });
+
+  createMoviePostRoutes(router);
+}
+
+/**
+ * Sets up the routes for creating movie ratings
+ *
+ * @param {object} router Express router object
+ */
+function createMoviePostRoutes(router) {
+  router.post('/movie', async (req, res, next) => {
+    try {
+      req.body.thumbnail = await fetchMovieThumbnail(req.body.title);
+      next();
+    } catch (e) {
+      res.send({ message: 'Could not find movie thumbnail' });
     }
   });
 
