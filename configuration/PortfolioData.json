@@ -1,0 +1,23 @@
+{
+  "includeProjectNames": [
+    "create-noodle-app",
+    "FilmStorageUpdater",
+    "IntroMusic",
+    "noodle-deploy",
+    "pending-pushes",
+    "RatingsPlotter-API",
+    "RatingsPlotter-Site",
+    "Recommendify",
+    "ryankrol.co.uk-API",
+    "ryankrol.co.uk-Site",
+    "SkyTracker",
+    "SneakersNotificationCenter",
+    "SpotifyMonthlyPlaylists",
+    "StockAPI",
+    "StockDataUpdater",
+    "StockScreener",
+    "TheBestOfToronto",
+    "uPlaylist",
+    "WheresMyMoney"
+  ]
+}

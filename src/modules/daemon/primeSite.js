@@ -4,6 +4,7 @@ import {
   LISTENS_ENDPOINT,
   BOOKS_ENDPOINT,
   MOVIES_ENDPOINT,
+  PORTFOLIO_ENDPOINT,
   LISTENING_PORT,
 } from '../constants';
 
@@ -16,12 +17,14 @@ async function primeSite() {
   const listensUrl = buildPrimingEndpoint(`${LISTENS_ENDPOINT}`);
   const booksUrl = buildPrimingEndpoint(`${BOOKS_ENDPOINT}`);
   const moviesUrl = buildPrimingEndpoint(`${MOVIES_ENDPOINT}`);
+  const portfolioUrl = buildPrimingEndpoint(`${PORTFOLIO_ENDPOINT}`);
 
   primeEndpoint(albumRatingsUrl);
   primeEndpoint(movieRatingsUrl);
   primeEndpoint(listensUrl);
   primeEndpoint(booksUrl);
   primeEndpoint(moviesUrl);
+  primeEndpoint(portfolioUrl);
 }
 
 /**
