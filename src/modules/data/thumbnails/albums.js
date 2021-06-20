@@ -22,7 +22,12 @@ async function fetchThumbnailForAlbum(artist, title) {
     throw new AlbumThumbnailNotFound('Could not find album thumbnail');
   }
 
-  return getLargeAlbumImage(data)[0]['#text'];
+  const image = getLargeAlbumImage(data)[0]['#text'];
+  if (!image) {
+    throw new AlbumThumbnailNotFound('Could not find album thumbnail');
+  }
+
+  return image;
 }
 
 /**
