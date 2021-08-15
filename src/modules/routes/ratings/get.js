@@ -1,10 +1,11 @@
 import createError from 'http-errors';
 import cacheCollection from '../../data/cache';
 
-import { getAlbumRatings, getMovieRatings } from '../../data/ratings';
+import { getAlbumRatings, getMovieRatings, getTelevisionRatings } from '../../data/ratings';
 
 const ALBUM_CACHE_NAME = 'albumRatings';
 const MOVIE_CACHE_NAME = 'movieRatings';
+const TV_CACHE_NAME = 'televisionRatings';
 const CACHE_TTL_MINUTES = 60 * 24;
 
 /**
@@ -36,6 +37,18 @@ function createGetRoutes(router) {
       next(createError(500));
     }
   });
+
+  // fetch all movie ratings
+  router.get('/tv', async (req, res, next) => {
+    const cache = await cacheCollection.getCache(TV_CACHE_NAME);
+
+    try {
+      const data = await cache.call();
+      res.send(data);
+    } catch (e) {
+      next(createError(500));
+    }
+  });
 }
 
 /**
@@ -50,6 +63,13 @@ function createGetRoutes(router) {
  */
 (async () => {
   cacheCollection.registerCache(MOVIE_CACHE_NAME, CACHE_TTL_MINUTES, () => getMovieRatings());
+})();
+
+/**
+ * Method to create cache for our television ratings API
+ */
+(async () => {
+  cacheCollection.registerCache(TV_CACHE_NAME, CACHE_TTL_MINUTES, () => getTelevisionRatings());
 })();
 
 export default createGetRoutes;

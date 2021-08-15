@@ -2,8 +2,16 @@ import createError from 'http-errors';
 import date from 'date-and-time';
 import fs from 'fs';
 
-import { createAlbumRatings, createMovieRatings } from '../../data/ratings';
-import { fetchThumbnailForMovie, fetchThumbnailForAlbum } from '../../data/thumbnails';
+import {
+  createAlbumRatings,
+  createMovieRatings,
+  createTelevisionRatings,
+} from '../../data/ratings';
+import {
+  fetchThumbnailForMovie,
+  fetchThumbnailForAlbum,
+  fetchThumbnailForTelevision,
+} from '../../data/thumbnails';
 
 const RATINGS_CREDENTIALS = JSON.parse(
   fs.readFileSync(`${__dirname}/../../../../credentials/ryankrolSite.json`),
@@ -46,6 +54,7 @@ function createPostMiddleware(router) {
 function createPostRoutes(router) {
   createAlbumPostRoutes(router);
   createMoviePostRoutes(router);
+  createTelevisionPostRoutes(router);
 }
 
 /**
@@ -104,6 +113,37 @@ function createMoviePostRoutes(router) {
 
     try {
       createMovieRatings(req.body, callback);
+    } catch (e) {
+      next(createError(500));
+    }
+  });
+}
+
+/**
+ * Sets up the routes for creating television ratings
+ *
+ * @param {object} router Express router object
+ */
+function createTelevisionPostRoutes(router) {
+  router.post('/tv', async (req, res, next) => {
+    try {
+      req.body.thumbnail = await fetchThumbnailForTelevision(req.body.title);
+      next();
+    } catch (e) {
+      res.send({ message: 'Could not find TV thumbnail' });
+    }
+  });
+
+  router.post('/tv', async (req, res, next) => {
+    /**
+     * Method to let the user know that the write is complete
+     */
+    const callback = () => {
+      res.send({ message: 'TV Write Complete!' });
+    };
+
+    try {
+      createTelevisionRatings(req.body, callback);
     } catch (e) {
       next(createError(500));
     }

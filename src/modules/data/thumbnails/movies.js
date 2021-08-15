@@ -14,7 +14,7 @@ const CONFIG = JSON.parse(
  */
 async function fetchThumbnailForMovie(title) {
   const searchInput = encodeURI(title);
-  const apiEndpoint = `http://www.omdbapi.com/?apikey=${CONFIG.apiKey}&t=${searchInput}`;
+  const apiEndpoint = `http://www.omdbapi.com/?apikey=${CONFIG.apiKey}&t=${searchInput}&type=movie`;
 
   const data = await apiCall(apiEndpoint);
 
