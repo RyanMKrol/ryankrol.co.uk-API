@@ -1,4 +1,4 @@
-// routes/ratings.js
+// routes/vinyl.js
 import express from 'express';
 
 import createGetRoutes from './get';
