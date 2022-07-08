@@ -26,7 +26,7 @@
     "http-errors": "^1.8.0",
     "lodash.ceil": "^4.0.4",
     "lodash.fill": "^3.4.0",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "node-fetch": "^2.6.1",
     "node-schedule": "^2.0.0",
     "noodle-utils": "^3.4.1"
