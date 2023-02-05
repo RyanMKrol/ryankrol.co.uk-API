@@ -10,6 +10,7 @@ import {
   MOVIES_ENDPOINT,
   RATINGS_ENDPOINT,
   PORTFOLIO_ENDPOINT,
+  VINYL_ENDPOINT,
 } from './modules/constants';
 
 import booksRouter from './modules/routes/books';
@@ -17,6 +18,7 @@ import listensRouter from './modules/routes/listens';
 import moviesRouter from './modules/routes/movies';
 import ratingsRouter from './modules/routes/ratings';
 import portfolioRouter from './modules/routes/portfolio';
+import vinylRouter from './modules/routes/vinyl';
 
 const app = express();
 
@@ -30,6 +32,7 @@ app.use(LISTENS_ENDPOINT, listensRouter);
 app.use(MOVIES_ENDPOINT, moviesRouter);
 app.use(RATINGS_ENDPOINT, ratingsRouter);
 app.use(PORTFOLIO_ENDPOINT, portfolioRouter);
+app.use(VINYL_ENDPOINT, vinylRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
