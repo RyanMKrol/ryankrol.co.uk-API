@@ -16,6 +16,19 @@ const { userId, bookshelfId } = API_CONFIG;
 const BATCH_SIZE = 40;
 const API_VOLUMES_ENDPOINT = `https://www.googleapis.com/books/v1/users/${userId}/bookshelves/${bookshelfId}/volumes?maxResults=${BATCH_SIZE}`;
 const API_BOOKSHELF_ENDPOINT = `https://www.googleapis.com/books/v1/users/${userId}/bookshelves/${bookshelfId}`;
+const API_SEARCH_ENDPOINT = `https://www.googleapis.com/books/v1/volumes?key=${API_CONFIG.apiKey}`;
+
+/**
+ * API to fetch a book cover URL from the google books API
+ *
+ * @param {string} title Title of the book
+ * @param {string} author Author of the book
+ * @returns {object} Google Books API response
+ */
+async function fetchBookInfo(title, author) {
+  const endpoint = `${API_SEARCH_ENDPOINT}&q=${title}+inauthor:${author}`;
+  return apiCall(endpoint);
+}
 
 /**
  * Call to fetch data around book collections, and extracting relevant data
@@ -127,4 +140,4 @@ function applyDataOverrides(booksData) {
   return booksData.map((book) => ({ ...book, ...API_OVERRIDES[book.bookId] }));
 }
 
-export default getBooks;
+export { fetchBookInfo, getBooks };

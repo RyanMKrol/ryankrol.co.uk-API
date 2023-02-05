@@ -1,17 +1,20 @@
+/*eslint-disable */
 import createError from 'http-errors';
 import date from 'date-and-time';
 import fs from 'fs';
 
 import {
   createAlbumRatings,
+  createBookRatings,
   createMovieRatings,
   createTelevisionRatings,
 } from '../../data/ratings';
 import {
-  fetchThumbnailForMovie,
+  fetchRemoteInfoForBook,
   fetchThumbnailForAlbum,
+  fetchThumbnailForMovie,
   fetchThumbnailForTelevision,
-} from '../../data/thumbnails';
+} from '../../data/remoteInfo';
 
 const RATINGS_CREDENTIALS = JSON.parse(
   fs.readFileSync(`${__dirname}/../../../../credentials/ryankrolSite.json`),
@@ -53,6 +56,7 @@ function createPostMiddleware(router) {
  */
 function createPostRoutes(router) {
   createAlbumPostRoutes(router);
+  createBookPostRoutes(router);
   createMoviePostRoutes(router);
   createTelevisionPostRoutes(router);
 }
@@ -82,6 +86,39 @@ function createAlbumPostRoutes(router) {
 
     try {
       createAlbumRatings(req.body, callback);
+    } catch (e) {
+      next(createError(500));
+    }
+  });
+}
+
+/**
+ * Sets up the routes for creating album ratings
+ *
+ * @param {object} router Express router object
+ */
+function createBookPostRoutes(router) {
+  router.post('/book', async (req, res, next) => {
+    try {
+      const remoteData = await fetchRemoteInfoForBook(req.body.title, req.body.author);
+      req.body = { ...req.body, ...remoteData };
+
+      next();
+    } catch (e) {
+      res.send({ message: 'Could not enough information about book' });
+    }
+  });
+
+  router.post('/book', async (req, res, next) => {
+    /**
+     * Method to let the user know that the write is complete
+     */
+    const callback = () => {
+      res.send({ message: 'Book Write Complete!' });
+    };
+
+    try {
+      createBookRatings(req.body, callback);
     } catch (e) {
       next(createError(500));
     }
