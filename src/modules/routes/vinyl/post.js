@@ -2,12 +2,8 @@ import createError from 'http-errors';
 import date from 'date-and-time';
 import fs from 'fs';
 
-import {
-  createVinylItem,
-} from '../../data/vinyl';
-import {
-  fetchThumbnailForAlbum,
-} from '../../data/thumbnails';
+import { createVinylItem } from '../../data/vinyl';
+import { fetchThumbnailForAlbum } from '../../data/remoteInfo';
 
 const RATINGS_CREDENTIALS = JSON.parse(
   fs.readFileSync(`${__dirname}/../../../../credentials/ryankrolSite.json`),
