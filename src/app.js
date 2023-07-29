@@ -4,8 +4,6 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
-import indexRouter from './routes/index';
-import usersRouter from './routes/users';
 import bookRouter from './routes/ratings/book';
 import albumRouter from './routes/ratings/album';
 import movieRouter from './routes/ratings/movie';
@@ -22,8 +20,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/ratings/book', bookRouter);
 app.use('/ratings/album', albumRouter);
 app.use('/ratings/movie', movieRouter);
