@@ -22,4 +22,4 @@ function cacheReadthrough(cache, key, fn) {
   });
 }
 
-export { cacheReadthrough };
+export default cacheReadthrough;

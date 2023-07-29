@@ -1,7 +1,5 @@
 import { DynamoWriteQueue, DynamoScan } from 'noodle-utils';
 
-import 'dotenv/config';
-
 const CREDENTIALS = {
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -20,7 +18,7 @@ function getWriteQueueInstance(table) {
     WRITE_QUEUES[table] = new DynamoWriteQueue(
       CREDENTIALS,
       DYNAMO_REGION,
-      table
+      table,
     );
   }
 
