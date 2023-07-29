@@ -1,5 +1,7 @@
 import { BookInformationNotFound } from '../errors';
 
+import 'dotenv/config';
+
 /**
  * Fetch remote information for a given book
  * @param {string} title title of the book

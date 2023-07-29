@@ -4,6 +4,8 @@ import {
   PostBodyMissingRequiredData,
 } from './errors';
 
+import 'dotenv/config';
+
 /**
  * A method to run a series of methods to handle a request, which can include
  * middleware. Each method must either throw an error, or return data to be

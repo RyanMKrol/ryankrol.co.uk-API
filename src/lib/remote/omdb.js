@@ -1,5 +1,7 @@
 import { ThumbnailNotFound } from '../errors';
 
+import 'dotenv/config';
+
 /**
  * Validates the API response
  * @param {JSON} item API response

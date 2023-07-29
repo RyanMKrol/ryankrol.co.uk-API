@@ -1,5 +1,7 @@
 import { ThumbnailNotFound } from '../errors';
 
+import 'dotenv/config';
+
 const EMPTY_THUMBNAIL_LINK = '';
 
 /**
