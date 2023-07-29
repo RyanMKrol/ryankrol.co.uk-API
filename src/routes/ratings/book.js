@@ -17,7 +17,7 @@ const router = express.Router();
 const BOOK_RATINGS_TABLE = 'BookRatings';
 const CACHE = new NodeCache({ stdTTL: ONE_HOUR_S });
 
-router.get('/', async (req, res) => {
+router.get('/', (req, res) => {
   handlerWithOptionalMiddleware(req, res, handleGet);
 });
 

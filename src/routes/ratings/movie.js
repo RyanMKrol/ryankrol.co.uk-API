@@ -17,7 +17,7 @@ const CACHE = new NodeCache({ stdTTL: ONE_HOUR_S });
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', (req, res) => {
   handlerWithOptionalMiddleware(req, res, handleGet);
 });
 
