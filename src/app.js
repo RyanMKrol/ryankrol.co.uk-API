@@ -1,42 +1,36 @@
-// app.js
-import express from 'express';
-import cookieParser from 'cookie-parser';
-import createError from 'http-errors';
-import cors from 'cors';
+import createError from 'http-errors'
+import express from 'express'
+import path from 'path'
+import cookieParser from 'cookie-parser'
+import logger from 'morgan'
 
-import {
-  BOOKS_ENDPOINT,
-  LISTENS_ENDPOINT,
-  MOVIES_ENDPOINT,
-  RATINGS_ENDPOINT,
-  PORTFOLIO_ENDPOINT,
-  VINYL_ENDPOINT,
-} from './modules/constants';
+import indexRouter from './routes/index';
+import usersRouter from './routes/users';
 
-import booksRouter from './modules/routes/books';
-import listensRouter from './modules/routes/listens';
-import moviesRouter from './modules/routes/movies';
-import ratingsRouter from './modules/routes/ratings';
-import portfolioRouter from './modules/routes/portfolio';
-import vinylRouter from './modules/routes/vinyl';
+var app = express();
 
-const app = express();
-
-app.use(cors());
+app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(BOOKS_ENDPOINT, booksRouter);
-app.use(LISTENS_ENDPOINT, listensRouter);
-app.use(MOVIES_ENDPOINT, moviesRouter);
-app.use(RATINGS_ENDPOINT, ratingsRouter);
-app.use(PORTFOLIO_ENDPOINT, portfolioRouter);
-app.use(VINYL_ENDPOINT, vinylRouter);
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
-app.use((req, res, next) => {
-  next(createError(404));
+app.use(function(req, res, next) {
+  res.status(404).send("Not Found!");
 });
 
-export default app;
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500).send("No!");
+});
+
+app.listen(3000)
