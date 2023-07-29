@@ -1,6 +1,6 @@
 import NodeCache from 'node-cache';
 import express from 'express';
-import ONE_HOUR_S from '../../lib/constants';
+import { ONE_HOUR_S } from '../../lib/constants';
 import { fetchThumbnailForMovie } from '../../lib/remote/omdb';
 import cacheReadthrough from '../../lib/cache';
 import { getWriteQueueInstance, scanTable } from '../../lib/dynamo';
