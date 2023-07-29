@@ -1,6 +1,6 @@
 import NodeCache from 'node-cache';
 import express from 'express';
-import { ONE_HOUR_S } from '../../lib/constants';
+import { DYNAMO_TABLES, ONE_HOUR_S } from '../../lib/constants';
 import fetchThumbnailForAlbum from '../../lib/remote/lastFm';
 import cacheReadthrough from '../../lib/cache';
 import { getWriteQueueInstance, scanTable } from '../../lib/dynamo';
@@ -12,7 +12,6 @@ import {
   withRequiredBodyKeys,
 } from '../../lib/middleware';
 
-const ALBUM_RATINGS_TABLE = 'AlbumRatings';
 const CACHE = new NodeCache({ stdTTL: ONE_HOUR_S });
 
 const router = express.Router();
@@ -47,7 +46,11 @@ router.post('/', (req, res) => {
 async function handleGet() {
   // can use filename as the key here because this is
   // the only file interacting with this cache object
-  return cacheReadthrough(CACHE, __filename, async () => scanTable(ALBUM_RATINGS_TABLE));
+  return cacheReadthrough(
+    CACHE,
+    __filename,
+    async () => scanTable(DYNAMO_TABLES.ALBUM_RATINGS_TABLE),
+  );
 }
 
 /**
@@ -57,7 +60,7 @@ async function handleGet() {
  */
 async function handlePost(req) {
   return new Promise((resolve) => {
-    const writeQueue = getWriteQueueInstance(ALBUM_RATINGS_TABLE);
+    const writeQueue = getWriteQueueInstance(DYNAMO_TABLES.ALBUM_RATINGS_TABLE);
     writeQueue.push(req.body, () => {
       resolve({ status: 200, message: 'Successful POST' });
     });

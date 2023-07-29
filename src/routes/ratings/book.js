@@ -1,6 +1,6 @@
 import NodeCache from 'node-cache';
 import express from 'express';
-import { ONE_HOUR_S } from '../../lib/constants';
+import { DYNAMO_TABLES, ONE_HOUR_S } from '../../lib/constants';
 import cacheReadthrough from '../../lib/cache';
 import { getWriteQueueInstance, scanTable } from '../../lib/dynamo';
 import {
@@ -14,7 +14,6 @@ import fetchRemoteInfoForBook from '../../lib/remote/googleBooks';
 
 const router = express.Router();
 
-const BOOK_RATINGS_TABLE = 'BookRatings';
 const CACHE = new NodeCache({ stdTTL: ONE_HOUR_S });
 
 router.get('/', (req, res) => {
@@ -41,7 +40,11 @@ router.post('/', (req, res) => {
 async function handleGet() {
   // can use filename as the key here because this is
   // the only file interacting with this cache object
-  return cacheReadthrough(CACHE, __filename, async () => scanTable(BOOK_RATINGS_TABLE));
+  return cacheReadthrough(
+    CACHE,
+    __filename,
+    async () => scanTable(DYNAMO_TABLES.BOOK_RATINGS_TABLE),
+  );
 }
 
 /**
@@ -51,7 +54,7 @@ async function handleGet() {
  */
 async function handlePost(req) {
   return new Promise((resolve) => {
-    const writeQueue = getWriteQueueInstance(BOOK_RATINGS_TABLE);
+    const writeQueue = getWriteQueueInstance(DYNAMO_TABLES.BOOK_RATINGS_TABLE);
     writeQueue.push(req.body, () => {
       resolve({ status: 200, message: 'Successful POST' });
     });
