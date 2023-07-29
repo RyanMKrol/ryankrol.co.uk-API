@@ -1,7 +1,7 @@
 import NodeCache from 'node-cache';
 import express from 'express';
 import { DYNAMO_TABLES, ONE_HOUR_S } from '../../lib/constants';
-import fetchThumbnailForAlbum from '../../lib/remote/lastFm';
+import { fetchThumbnailForAlbum } from '../../lib/remote/lastFm';
 import cacheReadthrough from '../../lib/cache';
 import { getWriteQueueInstance, scanTable } from '../../lib/dynamo';
 import {

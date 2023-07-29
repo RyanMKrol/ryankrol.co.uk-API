@@ -24,5 +24,6 @@ module.exports = {
   },
   rules: {
     'no-use-before-define': 'off',
+    'no-nested-ternary': 'off',
   },
 };
