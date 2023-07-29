@@ -1,4 +1,4 @@
-import { ThumbnailNotFound } from '@/lib/errors';
+import { ThumbnailNotFound } from '../errors';
 
 const EMPTY_THUMBNAIL_LINK = '';
 
@@ -30,9 +30,9 @@ async function fetchThumbnailForAlbum(artist, title) {
  */
 function isAlbumDataValid(data) {
   return (
-    data.album &&
-    data.album.image &&
-    getThumbnailUrl(data) !== EMPTY_THUMBNAIL_LINK
+    data.album
+    && data.album.image
+    && getThumbnailUrl(data) !== EMPTY_THUMBNAIL_LINK
   );
 }
 
@@ -43,7 +43,7 @@ function isAlbumDataValid(data) {
  */
 function getThumbnailUrl(data) {
   const largeAlbumImageItemResult = data.album.image.filter(
-    (x) => x.size === 'extralarge'
+    (x) => x.size === 'extralarge',
   );
 
   return largeAlbumImageItemResult.length === 1
