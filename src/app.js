@@ -7,6 +7,8 @@ import logger from 'morgan';
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
 
+import 'dotenv/config';
+
 const LOGGER_FORMAT = 'dev';
 
 const app = express();
