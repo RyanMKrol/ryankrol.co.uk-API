@@ -2,8 +2,10 @@
   "name": "ryankrol.co.uk-api",
   "version": "3.0.0",
   "scripts": {
-    "start": "npm run lint && babel src -d build && node ./build/app",
+    "build": "npm run lint && babel src -d build",
+    "start": "npm run build && node ./build/app",
     "dev": "npm run lint && nodemon --exec babel-node ./src/app",
+    "script:scanTable": "npm run build && node build/scripts/scanTable",
     "lint": "eslint src"
   },
   "dependencies": {
