@@ -2,8 +2,9 @@
   "name": "ryankrol.co.uk-api",
   "version": "3.0.0",
   "scripts": {
-    "start": "babel src -d build && node ./build/app",
-    "dev": "nodemon --exec babel-node ./src/app"
+    "start": "npm run lint && babel src -d build && node ./build/app",
+    "dev": "npm run lint && nodemon --exec babel-node ./src/app",
+    "lint": "eslint src"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -17,6 +18,9 @@
     "@babel/core": "^7.22.9",
     "@babel/node": "^7.22.6",
     "@babel/preset-env": "^7.22.9",
+    "eslint": "^8.46.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.28.0",
     "nodemon": "^3.0.1"
   }
 }
