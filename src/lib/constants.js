@@ -6,6 +6,7 @@ const DYNAMO_TABLES = {
   BOOK_RATINGS_TABLE: 'BookRatings',
   ALBUM_RATINGS_TABLE: 'AlbumRatings',
   TV_RATINGS_TABLE: 'TelevisionRatings',
+  VINYL_COLLECTION_TABLE: 'VinylCollection',
 };
 
 export { ONE_DAY_S, ONE_HOUR_S, DYNAMO_TABLES };
