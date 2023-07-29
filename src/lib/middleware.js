@@ -26,6 +26,7 @@ async function handlerWithOptionalMiddleware(req, res, ...handlerMethods) {
       res.status(200).json(data);
     })
     .catch((err) => {
+      console.log(err);
       if (err.status && err.name) {
         res.status(err.status).json({ message: err.name });
       } else {
