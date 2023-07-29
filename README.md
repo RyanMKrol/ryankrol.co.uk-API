@@ -21,6 +21,6 @@
 
 ### Configure a daemon to run the site
 
-* I usually use PM2 for this, so run the following
+* I usually use PM2 for this, so run the following:
   * `npm install pm2@latest -g`
   * `pm2 start npm --name "ryankrol.co.uk-API" -- start`
