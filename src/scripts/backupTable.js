@@ -15,15 +15,21 @@ async function main() {
 
   const writeQueue = getWriteQueueInstance(BACKUP_TABLE_NAME);
 
-  let itemsSoFar = 0;
+  let itemsProcessedSoFar = 0;
 
   await new Promise((resolve) => {
-    writeQueue.pushBatch(items, () => {
-      itemsSoFar += 1;
-      if (itemsSoFar === items.length) {
-        resolve();
-      }
-      process.stdout.write(`Processed ${itemsSoFar} items so far...\n`);
+    items.forEach((item) => {
+      writeQueue.push(item, () => {
+        itemsProcessedSoFar += 1;
+
+        process.stdout.write(`Processed ${itemsProcessedSoFar} items so far...\n`);
+        process.stdout.write(`Have written item: ${JSON.stringify(item, null, 2)}\n`);
+
+        if (itemsProcessedSoFar === items.length) {
+          process.stdout.write('Done\n');
+          resolve();
+        }
+      });
     });
   });
 
