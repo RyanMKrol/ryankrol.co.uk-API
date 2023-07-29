@@ -25,10 +25,10 @@ app.use((req, res, next) => {
   next(createError(404));
 });
 
-// error handler
-app.use((err, req, res) => {
-  // render the error page
-  res.status(err.status || 500).send(err.message);
+// need to keep next in the function signature, or the method doesn't get called
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
+  res.status(err.status || 500).json({ message: err.message });
 });
 
 app.listen(3000);
