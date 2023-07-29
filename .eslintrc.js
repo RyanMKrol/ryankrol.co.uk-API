@@ -3,7 +3,8 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: 'airbnb-base',
+  extends: ['plugin:jsdoc/recommended', 'airbnb-base'],
+  plugins: ["jsdoc"],
   overrides: [
     {
       env: {
