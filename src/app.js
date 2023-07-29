@@ -9,6 +9,7 @@ import usersRouter from './routes/users';
 import bookRouter from './routes/ratings/book';
 import albumRouter from './routes/ratings/album';
 import movieRouter from './routes/ratings/movie';
+import tvRouter from './routes/ratings/tv';
 
 const LOGGER_FORMAT = 'dev';
 
@@ -25,6 +26,7 @@ app.use('/users', usersRouter);
 app.use('/ratings/book', bookRouter);
 app.use('/ratings/album', albumRouter);
 app.use('/ratings/movie', movieRouter);
+app.use('/ratings/tv', tvRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
