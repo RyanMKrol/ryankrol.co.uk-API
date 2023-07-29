@@ -3,6 +3,34 @@ import { ThumbnailNotFound } from '../errors';
 const EMPTY_THUMBNAIL_LINK = '';
 
 /**
+ * Pulls the album image out of the API response
+ * @param {JSON} data API response
+ * @returns {string} The URL to the thumbnail
+ */
+function getThumbnailUrl(data) {
+  const largeAlbumImageItemResult = data.album.image.filter(
+    (x) => x.size === 'extralarge',
+  );
+
+  return largeAlbumImageItemResult.length === 1
+    ? largeAlbumImageItemResult[0]['#text']
+    : EMPTY_THUMBNAIL_LINK;
+}
+
+/**
+ * Validates the API response
+ * @param {JSON} data API response
+ * @returns {boolean} Whether the response is valid
+ */
+function isAlbumDataValid(data) {
+  return (
+    data.album
+    && data.album.image
+    && getThumbnailUrl(data) !== EMPTY_THUMBNAIL_LINK
+  );
+}
+
+/**
  * Fetches a thumbnail for an album
  * @param {string} artist The artist on the album
  * @param {string} title The artist on the title
@@ -21,34 +49,6 @@ async function fetchThumbnailForAlbum(artist, title) {
   }
 
   return getThumbnailUrl(data);
-}
-
-/**
- * Validates the API response
- * @param {JSON} data API response
- * @returns {boolean} Whether the response is valid
- */
-function isAlbumDataValid(data) {
-  return (
-    data.album
-    && data.album.image
-    && getThumbnailUrl(data) !== EMPTY_THUMBNAIL_LINK
-  );
-}
-
-/**
- * Pulls the album image out of the API response
- * @param {JSON} data API response
- * @returns {string} The URL to the thumbnail
- */
-function getThumbnailUrl(data) {
-  const largeAlbumImageItemResult = data.album.image.filter(
-    (x) => x.size === 'extralarge',
-  );
-
-  return largeAlbumImageItemResult.length === 1
-    ? largeAlbumImageItemResult[0]['#text']
-    : EMPTY_THUMBNAIL_LINK;
 }
 
 export default fetchThumbnailForAlbum;
