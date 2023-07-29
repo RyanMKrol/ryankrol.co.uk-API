@@ -17,8 +17,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/ratings', ratingsRouter);
-app.use('/vinyl', vinylRouter);
+app.use('/api/ratings', ratingsRouter);
+app.use('/api/vinyl', vinylRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
