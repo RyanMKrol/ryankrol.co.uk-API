@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-import { ThumbnailNotFound } from '../errors';
+import { ListensNotFound, ThumbnailNotFound } from '../errors';
 
 import 'dotenv/config';
 
@@ -66,7 +66,7 @@ async function fetchRecentListens() {
   const data = await response.json();
 
   if (!data || !data.topalbums || !data.topalbums.album) {
-    throw new Error();
+    throw new ListensNotFound();
   }
 
   return data.topalbums.album.map((album) => {
