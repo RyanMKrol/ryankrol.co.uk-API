@@ -2,12 +2,12 @@ import { scanTable } from '../lib/dynamo';
 import { DYNAMO_TABLES } from '../lib/constants';
 
 /**
- * Main
+ * Script to scan and print the contents of a Dynamo table
  */
 async function main() {
-  const TARGET_TABLE = DYNAMO_TABLES.ALBUM_RATINGS_TABLE;
+  const SOURCE_TABLE_NAME = DYNAMO_TABLES.ALBUM_RATINGS_TABLE;
 
-  const data = await scanTable(TARGET_TABLE);
+  const data = await scanTable(SOURCE_TABLE_NAME);
 
   data.forEach((item) => {
     process.stdout.write(`${JSON.stringify(item, null, 2)}\n`);
