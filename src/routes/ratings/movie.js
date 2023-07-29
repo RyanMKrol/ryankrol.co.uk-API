@@ -1,7 +1,7 @@
 import NodeCache from 'node-cache';
 import express from 'express';
 import ONE_HOUR_S from '../../lib/constants';
-import fetchThumbnailForAlbum from '../../lib/remote/lastFm';
+import { fetchThumbnailForMovie } from '../../lib/remote/omdb';
 import cacheReadthrough from '../../lib/cache';
 import { getWriteQueueInstance, scanTable } from '../../lib/dynamo';
 import {
@@ -12,7 +12,7 @@ import {
   withRequiredBodyKeys,
 } from '../../lib/middleware';
 
-const ALBUM_RATINGS_TABLE = 'AlbumRatings';
+const MOVIE_RATINGS_TABLE = 'MovieRatings';
 const CACHE = new NodeCache({ stdTTL: ONE_HOUR_S });
 
 const router = express.Router();
@@ -29,10 +29,12 @@ router.post('/', (req, res) => {
     withDateTracking,
     withRequiredBodyKeys([
       'title',
-      'artist',
-      'date',
-      'highlights',
-      'rating',
+      'blind',
+      'characters',
+      'craftsmanship',
+      'gist',
+      'sound',
+      'story',
     ]),
     withRequestBodyModification(addThumbnail),
     withRequiredBodyKeys(['thumbnail']),
@@ -47,7 +49,7 @@ router.post('/', (req, res) => {
 async function handleGet() {
   // can use filename as the key here because this is
   // the only file interacting with this cache object
-  return cacheReadthrough(CACHE, __filename, async () => scanTable(ALBUM_RATINGS_TABLE));
+  return cacheReadthrough(CACHE, __filename, async () => scanTable(MOVIE_RATINGS_TABLE));
 }
 
 /**
@@ -57,7 +59,7 @@ async function handleGet() {
  */
 async function handlePost(req) {
   return new Promise((resolve) => {
-    const writeQueue = getWriteQueueInstance(ALBUM_RATINGS_TABLE);
+    const writeQueue = getWriteQueueInstance(MOVIE_RATINGS_TABLE);
     writeQueue.push(req.body, () => {
       resolve({ status: 200, message: 'Successful POST' });
     });
@@ -65,15 +67,11 @@ async function handlePost(req) {
 }
 
 /**
- * Method to be run by middleware to add a thumbnail to the request
+ * Add a thumbnail for the movie to the request
  * @param {Request} req request
  */
 async function addThumbnail(req) {
-  const thumbnail = await fetchThumbnailForAlbum(
-    req.body.artist,
-    req.body.title,
-  );
-  req.body.thumbnail = thumbnail;
+  req.body.thumbnail = await fetchThumbnailForMovie(req.body.title);
 }
 
 export default router;
