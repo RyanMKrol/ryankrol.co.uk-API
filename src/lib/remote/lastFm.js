@@ -1,3 +1,5 @@
+import fetch from 'node-fetch';
+
 import { ThumbnailNotFound } from '../errors';
 
 import 'dotenv/config';
