@@ -30,6 +30,16 @@ router.post('/', (req, res) => {
   );
 });
 
+router.put('/', (req, res) => {
+  handlerWithOptionalMiddleware(
+    req,
+    res,
+    withAuthentication,
+    withRequiredBodyKeys(['title', 'author', 'date', 'rating', 'overview', 'thumbnail']),
+    handlePut,
+  );
+});
+
 /**
  * Handles GET requests to this API
  * @returns {object} The response object
@@ -55,6 +65,21 @@ async function handlePost(req) {
     writeQueue.push(req.body, () => {
       SERVER_CACHES.BOOK_CACHE.flushAll();
       resolve({ status: 200, message: 'Successful POST' });
+    });
+  });
+}
+
+/**
+ * Handles PUT requests to this API
+ * @param {Request} req request
+ * @returns {object} The response object
+ */
+async function handlePut(req) {
+  return new Promise((resolve) => {
+    const writeQueue = getWriteQueueInstance(DYNAMO_TABLES.BOOK_RATINGS_TABLE);
+    writeQueue.push(req.body, () => {
+      SERVER_CACHES.BOOK_CACHE.flushAll();
+      resolve({ status: 200, message: 'Successful PUT' });
     });
   });
 }
