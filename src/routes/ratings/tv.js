@@ -1,6 +1,5 @@
-import NodeCache from 'node-cache';
 import express from 'express';
-import { DYNAMO_TABLES } from '../../lib/constants';
+import { DYNAMO_TABLES, SERVER_CACHES } from '../../lib/constants';
 import { fetchThumbnailForTvSeries } from '../../lib/remote/omdb';
 import cacheReadthrough from '../../lib/cache';
 import { getWriteQueueInstance, scanTable } from '../../lib/dynamo';
@@ -11,8 +10,6 @@ import {
   withRequestBodyModification,
   withRequiredBodyKeys,
 } from '../../lib/middleware';
-
-const CACHE = new NodeCache();
 
 const router = express.Router();
 
@@ -48,7 +45,11 @@ router.post('/', (req, res) => {
 async function handleGet() {
   // can use filename as the key here because this is
   // the only file interacting with this cache object
-  return cacheReadthrough(CACHE, __filename, async () => scanTable(DYNAMO_TABLES.TV_RATINGS_TABLE));
+  return cacheReadthrough(
+    SERVER_CACHES.TV_CACHE,
+    __filename,
+    async () => scanTable(DYNAMO_TABLES.TV_RATINGS_TABLE),
+  );
 }
 
 /**
@@ -60,7 +61,7 @@ async function handlePost(req) {
   return new Promise((resolve) => {
     const writeQueue = getWriteQueueInstance(DYNAMO_TABLES.TV_RATINGS_TABLE);
     writeQueue.push(req.body, () => {
-      CACHE.flushAll();
+      SERVER_CACHES.TV_CACHE.flushAll();
       resolve({ status: 200, message: 'Successful POST' });
     });
   });

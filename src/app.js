@@ -7,6 +7,7 @@ import logger from 'morgan';
 import ratingsRouter from './routes/ratings';
 import vinylRouter from './routes/vinyl';
 import listensRouter from './routes/listens';
+import devRouter from './routes/dev';
 
 const LOGGER_FORMAT = 'dev';
 const PORT = 8000;
@@ -22,6 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/ratings', ratingsRouter);
 app.use('/api/vinyl', vinylRouter);
 app.use('/api/listens', listensRouter);
+app.use('/api/dev', devRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

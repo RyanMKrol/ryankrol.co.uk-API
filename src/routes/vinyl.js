@@ -1,6 +1,5 @@
-import NodeCache from 'node-cache';
 import express from 'express';
-import { DYNAMO_TABLES } from '../lib/constants';
+import { DYNAMO_TABLES, SERVER_CACHES } from '../lib/constants';
 import { fetchThumbnailForAlbum } from '../lib/remote/lastFm';
 import cacheReadthrough from '../lib/cache';
 import { getWriteQueueInstance, scanTable } from '../lib/dynamo';
@@ -11,8 +10,6 @@ import {
   withRequestBodyModification,
   withRequiredBodyKeys,
 } from '../lib/middleware';
-
-const CACHE = new NodeCache();
 
 const router = express.Router();
 
@@ -41,7 +38,7 @@ async function handleGet() {
   // can use filename as the key here because this is
   // the only file interacting with this cache object
   return cacheReadthrough(
-    CACHE,
+    SERVER_CACHES.VINYL_CACHE,
     __filename,
     async () => scanTable(DYNAMO_TABLES.VINYL_COLLECTION_TABLE),
   );
@@ -56,7 +53,7 @@ async function handlePost(req) {
   return new Promise((resolve) => {
     const writeQueue = getWriteQueueInstance(DYNAMO_TABLES.VINYL_COLLECTION_TABLE);
     writeQueue.push(req.body, () => {
-      CACHE.flushAll();
+      SERVER_CACHES.VINYL_CACHE.flushAll();
       resolve({ status: 200, message: 'Successful POST' });
     });
   });
