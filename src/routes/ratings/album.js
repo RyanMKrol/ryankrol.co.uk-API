@@ -36,6 +36,22 @@ router.post('/', (req, res) => {
   );
 });
 
+router.put('/', (req, res) => {
+  handlerWithOptionalMiddleware(
+    req,
+    res,
+    withAuthentication,
+    withRequiredBodyKeys([
+      'title',
+      'artist',
+      'highlights',
+      'rating',
+      'thumbnail',
+    ]),
+    handlePut,
+  );
+});
+
 /**
  * Handles GET requests to this API
  * @returns {object} The response object
@@ -61,6 +77,21 @@ async function handlePost(req) {
     writeQueue.push(req.body, () => {
       SERVER_CACHES.ALBUM_CACHE.flushAll();
       resolve({ status: 200, message: 'Successful POST' });
+    });
+  });
+}
+
+/**
+ * Handles PUT requests to this API
+ * @param {Request} req request
+ * @returns {object} The response object
+ */
+async function handlePut(req) {
+  return new Promise((resolve) => {
+    const writeQueue = getWriteQueueInstance(DYNAMO_TABLES.ALBUM_RATINGS_TABLE);
+    writeQueue.push(req.body, () => {
+      SERVER_CACHES.ALBUM_CACHE.flushAll();
+      resolve({ status: 200, message: 'Successful PUT' });
     });
   });
 }
