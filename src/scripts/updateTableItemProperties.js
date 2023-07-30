@@ -2,6 +2,15 @@ import { getWriteQueueInstance, scanTable } from '../lib/dynamo';
 import { DYNAMO_TABLES } from '../lib/constants';
 
 /**
+ * Note: The script is intended to be run on an ad-hoc basis; given this, the
+ * generateNewItem method is intended to be udpated with whatever logic is needed
+ * to update the items in the table
+ *
+ * Tip: If you want to remove a column from a table, set the property to undefined in
+ * the generateNewItem method
+ */
+
+/**
  * Method to modify the item in the table
  * @param {object} oldItem the old item
  * @returns {object} the mutated item
@@ -14,10 +23,6 @@ function generateNewItem(oldItem) {
 
 /**
  * Script to update the items of a given table.
- *
- * Note: The script is intended to be run on an ad-hoc basis; given this, the
- * generateNewItem method is intended to be udpated with whatever logic is needed
- * to update the items in the table
  */
 async function main() {
   const TABLE_NAME = DYNAMO_TABLES.ALBUM_RATINGS_TABLE;
