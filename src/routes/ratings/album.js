@@ -62,6 +62,7 @@ async function handlePost(req) {
   return new Promise((resolve) => {
     const writeQueue = getWriteQueueInstance(DYNAMO_TABLES.ALBUM_RATINGS_TABLE);
     writeQueue.push(req.body, () => {
+      CACHE.flushAll();
       resolve({ status: 200, message: 'Successful POST' });
     });
   });
