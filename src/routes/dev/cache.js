@@ -18,9 +18,12 @@ router.delete('/', async (req, res) => {
 
 /**
  * Flushes all caches on the server
+ * @returns {object} server response
  */
 function handleDelete() {
   Object.values(SERVER_CACHES).forEach((cache) => cache.flushAll());
+
+  return { status: 200, message: 'Successful POST' };
 }
 
 export default router;
