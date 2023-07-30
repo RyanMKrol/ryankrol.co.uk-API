@@ -39,6 +39,25 @@ router.post('/', (req, res) => {
   );
 });
 
+router.put('/', (req, res) => {
+  handlerWithOptionalMiddleware(
+    req,
+    res,
+    withAuthentication,
+    withRequiredBodyKeys([
+      'title',
+      'gist',
+      'overallScore',
+      'storyScore',
+      'craftsmanshipScore',
+      'soundScore',
+      'characterScore',
+      'thumbnail',
+    ]),
+    handlePut,
+  );
+});
+
 /**
  * Handles GET requests
  * @returns {object} The response object
@@ -64,6 +83,21 @@ async function handlePost(req) {
     writeQueue.push(req.body, () => {
       SERVER_CACHES.TV_CACHE.flushAll();
       resolve({ status: 200, message: 'Successful POST' });
+    });
+  });
+}
+
+/**
+ * Handles PUT requests
+ * @param {Request} req request
+ * @returns {object} The response object
+ */
+async function handlePut(req) {
+  return new Promise((resolve) => {
+    const writeQueue = getWriteQueueInstance(DYNAMO_TABLES.TV_RATINGS_TABLE);
+    writeQueue.push(req.body, () => {
+      SERVER_CACHES.TV_CACHE.flushAll();
+      resolve({ status: 200, message: 'Successful PUT' });
     });
   });
 }
