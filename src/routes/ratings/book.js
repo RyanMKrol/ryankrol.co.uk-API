@@ -1,6 +1,6 @@
 import NodeCache from 'node-cache';
 import express from 'express';
-import { DYNAMO_TABLES, ONE_HOUR_S } from '../../lib/constants';
+import { DYNAMO_TABLES } from '../../lib/constants';
 import cacheReadthrough from '../../lib/cache';
 import { getWriteQueueInstance, scanTable } from '../../lib/dynamo';
 import {
@@ -14,7 +14,7 @@ import fetchRemoteInfoForBook from '../../lib/remote/googleBooks';
 
 const router = express.Router();
 
-const CACHE = new NodeCache({ stdTTL: ONE_HOUR_S });
+const CACHE = new NodeCache();
 
 router.get('/', (req, res) => {
   handlerWithOptionalMiddleware(req, res, handleGet);

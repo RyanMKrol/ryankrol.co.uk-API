@@ -1,6 +1,6 @@
 import NodeCache from 'node-cache';
 import express from 'express';
-import { DYNAMO_TABLES, ONE_HOUR_S } from '../../lib/constants';
+import { DYNAMO_TABLES } from '../../lib/constants';
 import { fetchThumbnailForTvSeries } from '../../lib/remote/omdb';
 import cacheReadthrough from '../../lib/cache';
 import { getWriteQueueInstance, scanTable } from '../../lib/dynamo';
@@ -12,7 +12,7 @@ import {
   withRequiredBodyKeys,
 } from '../../lib/middleware';
 
-const CACHE = new NodeCache({ stdTTL: ONE_HOUR_S });
+const CACHE = new NodeCache();
 
 const router = express.Router();
 
