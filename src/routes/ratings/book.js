@@ -26,7 +26,7 @@ router.post('/', (req, res) => {
     res,
     withAuthentication,
     withDateTracking,
-    withRequiredBodyKeys(['title', 'author', 'date', 'rating']),
+    withRequiredBodyKeys(['title', 'author', 'date', 'rating', 'overview']),
     withRequestBodyModification(addBookInfo),
     withRequiredBodyKeys(['thumbnail']),
     handlePost,
