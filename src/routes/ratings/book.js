@@ -35,7 +35,7 @@ router.put('/', (req, res) => {
     req,
     res,
     withAuthentication,
-    withRequiredBodyKeys(['title', 'author', 'date', 'rating', 'overview', 'thumbnail']),
+    withRequiredBodyKeys(['title', 'author', 'rating', 'overview', 'thumbnail']),
     handlePut,
   );
 });
