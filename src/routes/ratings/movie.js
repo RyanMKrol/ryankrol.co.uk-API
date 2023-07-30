@@ -26,6 +26,7 @@ router.post('/', (req, res) => {
     withRequiredBodyKeys([
       'title',
       'gist',
+      'date',
       'overallScore',
       'storyScore',
       'craftsmanshipScore',
