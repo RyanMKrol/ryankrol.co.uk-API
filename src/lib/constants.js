@@ -1,5 +1,4 @@
 const ONE_DAY_S = 60 * 60 * 24;
-const ONE_HOUR_S = 60 * 60;
 
 const DYNAMO_TABLES = {
   MOVIE_RATINGS_TABLE: 'MovieRatings',
@@ -9,4 +8,4 @@ const DYNAMO_TABLES = {
   VINYL_COLLECTION_TABLE: 'VinylCollection',
 };
 
-export { ONE_DAY_S, ONE_HOUR_S, DYNAMO_TABLES };
+export { ONE_DAY_S, DYNAMO_TABLES };
