@@ -4,6 +4,7 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
+import concertsRouter from './routes/concerts';
 import ratingsRouter from './routes/ratings';
 import vinylRouter from './routes/vinyl';
 import listensRouter from './routes/listens';
@@ -20,6 +21,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/api/concerts', concertsRouter);
 app.use('/api/ratings', ratingsRouter);
 app.use('/api/vinyl', vinylRouter);
 app.use('/api/listens', listensRouter);

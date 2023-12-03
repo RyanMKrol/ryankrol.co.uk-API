@@ -8,6 +8,7 @@ const DYNAMO_TABLES = {
   ALBUM_RATINGS_TABLE: 'AlbumRatings',
   TV_RATINGS_TABLE: 'TelevisionRatings',
   VINYL_COLLECTION_TABLE: 'VinylCollection',
+  CONCERTS_TABLE: 'ConcertDataItems',
 };
 
 const SERVER_CACHES = {
@@ -17,6 +18,7 @@ const SERVER_CACHES = {
   TV_CACHE: new NodeCache(),
   VINYL_CACHE: new NodeCache(),
   LISTENS_CACHE: new NodeCache({ stdTTL: ONE_DAY_S }),
+  CONCERTS_CACHE: new NodeCache({ stdTTL: ONE_DAY_S }),
 };
 
 export { DYNAMO_TABLES, SERVER_CACHES };
