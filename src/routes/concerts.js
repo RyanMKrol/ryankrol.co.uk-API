@@ -119,7 +119,6 @@ async function decorateWithArtistPreferences(concertData) {
  * an increased score if the venue is preferred.
  */
 function decorateWithVenuePreferences(concertData) {
-  console.log('decorating with venue preferences', concertData);
   const preferredVenues = process.env.PREFERRED_VENUES.split(',').map((val) => val.toLowerCase());
 
   return concertData.reduce((acc, val) => {

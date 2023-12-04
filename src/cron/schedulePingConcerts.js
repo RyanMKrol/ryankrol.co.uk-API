@@ -6,7 +6,6 @@ import cron from 'node-cron';
  */
 async function schedulePingConcertsEndpoint() {
   cron.schedule('0 0 * * *', () => {
-    console.log('Pinging concerts API...');
     fetch('http://ryankrol.co.uk/api/concerts');
   });
 }
