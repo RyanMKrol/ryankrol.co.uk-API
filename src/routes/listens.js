@@ -1,5 +1,5 @@
 import express from 'express';
-import { fetchRecentListens } from '../lib/remote/lastFm';
+import { fetchRecentAlbumListens } from '../lib/remote/lastFm';
 import cacheReadthrough from '../lib/cache';
 import {
   handlerWithOptionalMiddleware,
@@ -22,7 +22,7 @@ async function handleGet() {
   return cacheReadthrough(
     SERVER_CACHES.LISTENS_CACHE,
     __filename,
-    async () => fetchRecentListens(),
+    async () => fetchRecentAlbumListens(),
   );
 }
 

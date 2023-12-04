@@ -56,11 +56,47 @@ async function fetchThumbnailForAlbum(artist, title) {
 }
 
 /**
- * Fetches my listening activity over the last week
+ * Fetches the artists i've listened to over a given period
+ * @param {string} period The period to fetch artist data for
+ * @param {number} minPlaycount The number of plays required to include the artist in the list
  * @returns {JSON} Listening activity
  */
-async function fetchRecentListens() {
-  const apiEndpoint = buildRecentListensApiEndpoint(process.env.LAST_FM_USERNAME, process.env.LAST_FM_API_KEY, '1month');
+async function fetchArtistListensForPeriod(period, minPlaycount) {
+  const apiEndpoint = buildRecentArtistListensApiEndpoint(
+    process.env.LAST_FM_USERNAME,
+    process.env.LAST_FM_API_KEY,
+    period,
+  );
+
+  const response = await fetch(apiEndpoint);
+  const data = await response.json();
+
+  if (!data || !data.topartists || !data.topartists.artist) {
+    throw new ListensNotFound();
+  }
+
+  return data.topartists.artist
+    .filter((artist) => Number.parseInt(artist.playcount, 10) > minPlaycount)
+    .map((artist) => artist.name);
+}
+
+/**
+ * Builds a URL to fetch top artists with
+ * @param {string} user user to fetch info for
+ * @param {string} apiKey key for the lastFm API
+ * @param {string} period time period to search for
+ * @returns {string} The URL to call
+ */
+function buildRecentArtistListensApiEndpoint(user, apiKey, period) {
+  return `http://ws.audioscrobbler.com/2.0/?method=user.gettopartists&format=json&user=${user}&api_key=${apiKey}&period=${period}`;
+}
+
+/**
+ * Fetches my listening activity over the last month
+ * @returns {JSON} Listening activity
+ */
+async function fetchRecentAlbumListens() {
+  const apiEndpoint = buildRecentAlbumListensApiEndpoint(process.env.LAST_FM_USERNAME, process.env.LAST_FM_API_KEY, '1month');
 
   const response = await fetch(apiEndpoint);
   const data = await response.json();
@@ -89,7 +125,7 @@ async function fetchRecentListens() {
  * @param {string} period time period to search for
  * @returns {string} The URL to call
  */
-function buildRecentListensApiEndpoint(user, apiKey, period) {
+function buildRecentAlbumListensApiEndpoint(user, apiKey, period) {
   return `http://ws.audioscrobbler.com/2.0/?method=user.gettopalbums&format=json&user=${user}&api_key=${apiKey}&period=${period}`;
 }
 
@@ -119,4 +155,4 @@ function sortThumbnailsBySize(thumbnails) {
   return thumbnailsWithSizeValue;
 }
 
-export { fetchThumbnailForAlbum, fetchRecentListens };
+export { fetchThumbnailForAlbum, fetchArtistListensForPeriod, fetchRecentAlbumListens };

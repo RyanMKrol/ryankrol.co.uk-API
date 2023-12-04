@@ -21,4 +21,13 @@ const SERVER_CACHES = {
   CONCERTS_CACHE: new NodeCache({ stdTTL: ONE_DAY_S }),
 };
 
-export { DYNAMO_TABLES, SERVER_CACHES };
+const LAST_FM_LISTENING_PERIODS = {
+  OVERALL: 'overall ',
+  ONE_WEEK: '7day',
+  ONE_MONTH: '1month',
+  THREE_MONTHS: '3month',
+  SIX_MONTHS: '6month ',
+  ONE_YEAR: '12month',
+};
+
+export { DYNAMO_TABLES, SERVER_CACHES, LAST_FM_LISTENING_PERIODS };
