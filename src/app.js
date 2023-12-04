@@ -10,6 +10,8 @@ import vinylRouter from './routes/vinyl';
 import listensRouter from './routes/listens';
 import devRouter from './routes/dev';
 
+import scheduleCronJobs from './cron';
+
 const LOGGER_FORMAT = 'dev';
 const PORT = 8000;
 
@@ -41,3 +43,5 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   process.stdout.write(`App is listening on port ${PORT}\n`);
 });
+
+scheduleCronJobs();

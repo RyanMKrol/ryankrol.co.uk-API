@@ -21,6 +21,7 @@
     "lodash.groupby": "^4.6.0",
     "morgan": "~1.9.1",
     "node-cache": "^5.1.2",
+    "node-cron": "^3.0.3",
     "node-fetch": "^2.6.12",
     "noodle-utils": "^3.4.1"
   },
